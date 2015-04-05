@@ -64,7 +64,11 @@ xml:fb="http://www.facebook.com/2008/fbml">
       FB.api('/me/events', function(response) {
          //console.log(response);
          for (var curEvent = response.data.length - 1; curEvent >= response.data.length-10; curEvent -= 1) {
-            document.getElementById('events').innerHTML += 'Event ' + (response.data.length - curEvent) + ": " + response.data[curEvent].name + '</br>';
+            document.getElementById('events').innerHTML += '<b>' + response.data[curEvent].name + '</b></br>'
+            + 'Date: ' + response.data[curEvent].start_time.substr(5, 2)
+            + '/' + response.data[curEvent].start_time.substr(8, 2) + '</br>'
+            + 'Time: ' + response.data[curEvent].start_time.substr(11, 5) + '</br>'
+            + 'RSVP Status: ' + response.data[curEvent].rsvp_status + '</br></br>';
          }
       });
 
@@ -123,7 +127,7 @@ xml:fb="http://www.facebook.com/2008/fbml">
 <div id="pagewrap">
 
   <div id="header">
-    <h1>3 Column Responsive Layout</h1>
+    <h1>Nirvana</h1>
   </div>
     
   <div id="content">
