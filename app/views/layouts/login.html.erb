@@ -74,8 +74,13 @@ xml:fb="http://www.facebook.com/2008/fbml">
       //session['FB'] = FB;
       FB.api('/me/inbox', function(response) {
          console.log(response);
+         
+         // write inbox content
          for (var curConv = 0; curConv < 10; curConv += 1) {
-            document.getElementById('content').innerHTML += response.data[curConv].to.data[0].name + '</br>';
+            document.getElementById('content').innerHTML += "<a id='conv" + curConv + "' href='#'>" + response.data[curConv].to.data[0].name + "</a></br>";
+            document.getElementById("conv" + curConv).addEventListener("click", function() {
+               loadConv(curConv, response);
+            }, false);
          }
       });
 
@@ -89,6 +94,15 @@ xml:fb="http://www.facebook.com/2008/fbml">
          link: 'http://lahacks.com/'
       });
    }
+
+   function loadConv(id, response) {
+      // write conversation
+      var curConv = parseInt(id.substr(4), 10);
+      document.getElementById('middle').innerHTML = "";
+      for (var curMsg = 0; curMsg < 10; curMsg += 1) {
+         document.getElementById('middle').innerHTML += response.data[curConv].comments.data[curMsg].message + '</br></br>';
+      }
+   };
    </script>
 
 <div id="pagewrap">
