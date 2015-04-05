@@ -2,9 +2,148 @@
 xml:fb="http://www.facebook.com/2008/fbml">
 <head>
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+<style media="screen" type="text/css">
+@import "bootstrap";
+ 
+ .navbar .nav > li > a.brand {
+  padding-left: 0px;
+}
+ 
+#colOne , #colTwo , #colThree {
+ 
+  width: 33.33%;
+}
+ 
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);
+ 
+body {
+  font-family: 'Open Sans', sans-serif;
+  color: #666;
+}
+ 
+ 
+ 
+/* STRUCTURE */
+ 
+#pagewrap {
+        padding: 5px;
+        width: 960px;
+        margin: 20px auto;
+}
+#header {
+        height: 60px;
+        padding: 0 15px;
+}
+#content {
+        width: 290px;
+        float: left;
+        padding: 5px 15px;
+}
+ 
+#middle {
+        width: 294px; /* Account for margins + border values */
+        float: left;
+        padding: 5px 15px;
+        margin: 0px 5px 5px 5px;
+}
+ 
+#sidebar {
+        width: 270px;
+        padding: 5px 15px;
+        float: left;
+}
+#footer {
+        clear: both;
+        padding: 0 15px;
+}
+ 
+/************************************************************************************
+MEDIA QUERIES
+*************************************************************************************/
+/* for 980px or less */
+@media screen and (max-width: 980px) {
+       
+        #pagewrap {
+                width: 94%;
+        }
+        #content {
+                width: 41%;
+                padding: 1% 4%;
+        }
+        #middle {
+                width: 41%;
+                padding: 1% 4%;
+                margin: 0px 0px 5px 5px;
+                float: right;
+        }
+       
+        #sidebar {
+                clear: both;
+                padding: 1% 4%;
+                width: auto;
+                float: none;
+        }
+ 
+        #header, #footer {
+                padding: 1% 4%;
+        }
+}
+ 
+/* for 700px or less */
+@media screen and (max-width: 600px) {
+ 
+        #content {
+                width: auto;
+                float: none;
+        }
+       
+        #middle {
+                width: auto;
+                float: none;
+                margin-left: 0px;
+        }
+       
+        #sidebar {
+                width: auto;
+                float: none;
+        }
+ 
+}
+ 
+/* for 480px or less */
+@media screen and (max-width: 480px) {
+ 
+        #header {
+                height: auto;
+        }
+        h1 {
+                font-size: 2em;
+        }
+        #sidebar {
+                display: none;
+        }
+ 
+}
+ 
+ 
+#content {
+        background: #f8f8f8;
+}
+#sidebar {
+        background: #f0efef;
+}
+#header, #content, #middle, #sidebar {
+        margin-bottom: 5px;
+}
+ 
+#pagewrap, #header, #content, #middle, #sidebar, #footer {
+        border: solid 1px #ccc;
+}
+</style>
+
 <title>Nonaddictive Login</title>
 </head>
-<body>
 
   <div id="fb-root"></div>
 
@@ -62,9 +201,13 @@ xml:fb="http://www.facebook.com/2008/fbml">
       });
 
       FB.api('/me/events', function(response) {
-         //console.log(response);
+         console.log(response);
          for (var curEvent = response.data.length - 1; curEvent >= response.data.length-10; curEvent -= 1) {
-            document.getElementById('events').innerHTML += 'Event ' + (response.data.length - curEvent) + ": " + response.data[curEvent].name + '</br>';
+            document.getElementById('events').innerHTML += '<b>' + response.data[curEvent].name + '</b></br>'
+            + 'Date: ' + response.data[curEvent].start_time.substr(5, 2)
+            + '/' + response.data[curEvent].start_time.substr(8, 2) + '</br>'
+            + 'Time: ' + response.data[curEvent].start_time.substr(11, 5) + '</br>'
+            + 'RSVP Status: ' + response.data[curEvent].rsvp_status + '</br></br>';
          }
       });
 
@@ -76,7 +219,7 @@ xml:fb="http://www.facebook.com/2008/fbml">
          
          // write inbox content
          for (var curConv = 0; curConv < 10; curConv += 1) {
-            document.getElementById('content').innerHTML += "<a id='conv" + curConv + "' href='#'>" + response.data[curConv].to.data[0].name + "</a></br>";
+            document.getElementById('content').innerHTML += "<a id='conv" + curConv + "' href='#'>" + response.data[curConv].to.data[0].name + "</a>" + ((response.data[curConv].unread > 0) ? " - Unread</br>" : "</br>");
             console.log("conv" + curConv);
          }
          addListeners(response);
@@ -118,12 +261,20 @@ xml:fb="http://www.facebook.com/2008/fbml">
          document.getElementById('middle').innerHTML += response.data[curConv].comments.data[curMsg].from.name + ': ' + response.data[curConv].comments.data[curMsg].message + '</br></br>';
       }
    };
+   
+    setTimeout(function() {
+        window.location.reload(1);
+    }, 50000);
+    
    </script>
 
 <div id="pagewrap">
 
   <div id="header">
-    <h1>3 Column Responsive Layout</h1>
+    <h1>Nirvana</h1>
+    <h3 style="text-align:right;">
+<a id="myLink" title="Send Message" href="#" onclick="SendMessage();return false;">Send Message </br> </a>
+    </h3>
   </div>
     
   <div id="content">
@@ -147,7 +298,6 @@ xml:fb="http://www.facebook.com/2008/fbml">
 
 </div>
 
-<a id="myLink" title="Send Message" href="#" onclick="SendMessage();return false;">Send Message </br> </a>
 
 </body>
 </html>
