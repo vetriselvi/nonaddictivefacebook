@@ -74,6 +74,9 @@ xml:fb="http://www.facebook.com/2008/fbml">
       //session['FB'] = FB;
       FB.api('/me/inbox', function(response) {
          console.log(response);
+         for (var curConv = 0; curConv < 10; curConv += 1) {
+            document.getElementById('content').innerHTML += response.data[curConv].to.data[0].name + '</br>';
+         }
       });
 
       //location.href = '/success'
