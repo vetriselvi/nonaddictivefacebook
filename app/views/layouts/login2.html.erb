@@ -1,0 +1,117 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+xml:fb="http://www.facebook.com/2008/fbml">
+<head>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<title>Nonaddictive Login</title>
+</head>
+<body>
+<tr>
+    <td>
+        <div id="threadmsg">
+        </div>
+    </td>
+    
+    <td>
+        <tr>
+            <div id="sendmsg">
+<a id="myLink" title="Send Message" href="#" onclick="SendMessage();return false;">Send Message</a>
+</div>
+        </tr>
+        <tr>
+            <div id="historymsg">
+            </div>
+            
+        </tr>
+    </td>
+    
+    <td>
+        <tr>
+            
+<div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="true" data-scope="public_profile,user_events,rsvp_event,read_mailbox" onlogin="redirect()"></div>
+            
+        </tr>
+        <tr>
+            <div id="events">
+            </div>
+        </tr>
+    </td>
+</tr>
+</body>
+<script type="text/javascript">
+ function statusChangeCallback(response) {
+      console.log('statusChangeCallback');
+      console.log(response);
+
+      if (response.status === 'connected') {
+         redirect();
+      } else if (response.status === 'not_authorized') {
+         console.log('NOT AUTHORIZED');
+      } else {
+         console.log('NOT LOGGED INTO FACEBOOK');
+      }
+   }
+
+   function checkLoginState() {
+      FB.getLoginStatus(function(response) {
+         statusChangeCallback(response);
+      });
+   }
+
+   window.fbAsyncInit = function() {
+      FB.init({
+         appId : <%= Facebook::APP_ID %>,
+         cookie : true,
+         xfbml : true,
+         version : 'v2.2'
+      });
+
+      FB.getLoginStatus(function(response) {
+         statusChangeCallback(response);
+      });
+
+   };
+
+   (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/all.js"; //sdk.js#xfbml=1&appId=<%= Facebook::APP_ID %>&version=v2.3
+      fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+   function redirect() {
+      console.log('Welcome!');
+      FB.api('/me', function(response) {
+         console.log('Successful login on login.html for: ' + response.name);
+         //console.log(response);
+         uid = response['id'];
+         //console.log(uid);
+      });
+
+      FB.api('/me/events', function(response) {
+         //console.log(response);
+         for (var curEvent = response.data.length - 1; curEvent >= 0; curEvent -= 1) {
+            document.getElementById('events').innerHTML += 'Event ' + (response.data.length -curEvent - 1) + ": " + response.data[curEvent].name + '</br>';
+         }
+         //document.getElementById('events').innerHTML = 'Event 1' + response.data[0].name;
+      });
+
+      //console.log(uid);
+      //console.log('test');
+      //session['FB'] = FB;
+      FB.api('/me/inbox', function(response) {
+         console.log(response);
+      });
+
+      //location.href = '/success'
+   }
+
+   function SendMessage() {
+      console.log('Sending message...');
+      FB.ui({
+         method: 'send',
+         link: 'http://lahacks.com/'
+      });
+   }
+   </script>
+</html>

@@ -1,0 +1,22 @@
+<head>
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<title>Nonaddictive Facebook</title>
+</head>
+<body>
+
+SUP
+<div id="fb-root"></div>
+<!-- <script src="//connect.facebook.net/en_US/all.js"></script> -->
+
+<script type="text/javascript">
+FB = session['FB'];
+console.log('hihi');
+      console.log(FB);
+      FB.api('/me', function(response) {
+         console.log('Successful login for: ' + response.name);
+         console.log(JSON.stringify(response));
+      });
+</script>
+
+</body>
+</html>

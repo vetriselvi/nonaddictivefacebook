@@ -1,0 +1,15 @@
+# config/facebook.yml
+development:
+   app_id: 366578130211647
+   secret_key: ENV["facebook_secret"] 
+   callback_url: http://localhost:3000/
+
+test:
+   app_id: 366578130211647
+   secret_key: ENV["facebook_secret"] 
+   callback_url: http://localhost:3000/
+
+production:
+   app_id: ENV["facebook_app_id"]
+   secret_key: ENV["facebook_secret"] 
+   callback_url: http://localhost:3000/
