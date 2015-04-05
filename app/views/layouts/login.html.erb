@@ -78,11 +78,16 @@ xml:fb="http://www.facebook.com/2008/fbml">
          // write inbox content
          for (var curConv = 0; curConv < 10; curConv += 1) {
             document.getElementById('content').innerHTML += "<a id='conv" + curConv + "' href='#'>" + response.data[curConv].to.data[0].name + "</a></br>";
-            document.getElementById("conv" + curConv).addEventListener("click", function() {
-               loadConv(curConv, response);
-            }, false);
+            console.log("conv" + curConv);
          }
       });
+      console.log('stuff');
+      for (var cur = 0; cur < 10; cur += 1) {
+         console.log(cur);
+        document.getElementById("conv" + cur).addEventListener("click", function() {
+           loadConv(cur, response);
+        }, false);
+      }
 
       //location.href = '/success'
    }
