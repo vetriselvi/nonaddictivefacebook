@@ -5,6 +5,11 @@ xml:fb="http://www.facebook.com/2008/fbml">
 <title>Nonaddictive Login</title>
 </head>
 <body>
+
+  <div id="fb-root"></div>
+
+  <div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="true" data-scope="public_profile,user_events,rsvp_event,read_mailbox" onlogin="redirect()"></div>
+
     <script type="text/javascript">
  function statusChangeCallback(response) {
       console.log('statusChangeCallback');
@@ -56,12 +61,6 @@ xml:fb="http://www.facebook.com/2008/fbml">
          //console.log(uid);
       });
 
-      FB.api( "/{thread-id}", function (response) {
-      if (response && !response.error) {
-        /* handle the result */
-      }
-    });
-
       FB.api('/me/events', function(response) {
          //console.log(response);
          for (var curEvent = response.data.length - 1; curEvent >= 0; curEvent -= 1) {
@@ -88,7 +87,7 @@ xml:fb="http://www.facebook.com/2008/fbml">
       });
    }
    </script>
-    <table>
+  <!--  <table>
 <tr>
     <td id="colOne">
         <a id="threadmsg">
@@ -126,6 +125,38 @@ xml:fb="http://www.facebook.com/2008/fbml">
         </table>
     </td>
 </tr>
-</table>
+</table> -->
+
+<div id="pagewrap">
+
+  <div id="header">
+    <h1>3 Column Responsive Layout</h1>
+  </div>
+    
+  <div id="content">
+    <h2>Inbox</h2>
+    
+  </div>
+  
+  <div id="middle">
+    <h2>Current Messages</h2>
+    
+  </div>
+
+  <div id="sidebar">
+    <h2>Events</h2>
+    <div id='events'></div>
+  </div>
+  
+  <div id='footer'>
+  </div>
+  
+
+</div>
+
+
 </body>
 </html>
+
+
+
